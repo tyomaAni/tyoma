@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+bin64
+build/.vs
+build/testapp/.vs
+build/testapp/testapp/x64
+build/tyoma.math/x64

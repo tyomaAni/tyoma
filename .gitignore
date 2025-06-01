@@ -34,8 +34,9 @@ bin64
 build/.vs
 build/testapp/.vs
 build/testapp/testapp/x64
-build/tyoma.math/x64
+build/T.math/x64
 build/testapp/x64
-build/Tyoma.Base/x64
-build/Tyoma.Memory/x64
-build/Tyoma.String/x64
+build/T.Base/x64
+build/T.Memory/x64
+build/T.String/x64
+

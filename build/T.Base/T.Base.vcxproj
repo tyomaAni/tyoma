@@ -19,37 +19,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\testapp\testapp.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.Assert.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.Log.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.Stacktracer.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.StacktracerE.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{427a77f1-d7c1-4b9e-95c5-3c827db9d2c0}</ProjectGuid>
-    <RootNamespace>testapp</RootNamespace>
+    <ProjectGuid>{7c37dc78-bbf1-4011-a378-2e22876bee18}</ProjectGuid>
+    <RootNamespace>T.Base</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>T.Base</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -97,8 +102,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../lib/$(Platform)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>../../lib/$(Platform)/$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>../../lib/$(Platform)/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,8 +120,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../lib/$(Platform)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>../../lib/$(Platform)/$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>../../lib/$(Platform)/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -131,8 +136,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../lib/$(Platform)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>../../lib/$(Platform)/$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>../../lib/$(Platform)/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,8 +154,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../lib/$(Platform)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>../../lib/$(Platform)/$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>../../lib/$(Platform)/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

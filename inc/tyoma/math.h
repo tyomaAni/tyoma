@@ -43,8 +43,8 @@ const double PIHalf = 3.14159265358979323846 * 0.5;
 const double PIPI = 6.283185307179586476925286766559;
 
 #include "math/vector.h"
-#include "math/matrix.h"
 #include "math/quaternion.h"
+#include "math/matrix.h"
 
 class TY_API tyMath
 {

@@ -1,0 +1,65 @@
+﻿/*
+BSD 2-Clause License
+
+Copyright (c) 2025, tyomaAni
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+#pragma once
+
+#ifndef _TY_MEM_H_
+#define _TY_MEM_H_
+
+/// Use this functions instead malloc\free new\delete
+class TY_API tyMemory
+{
+public:
+	static void* Malloc(size_t size);
+	static void* Calloc(size_t size);
+	static void  Free(void*);
+	static void* ReAlloc(void*, size_t size);
+};
+
+/// Create object
+template<typename _type, typename... Args>
+_type* tyCreate(Args&&... args)
+{
+	_type* ptr = (_type*)tyMemory::Malloc(sizeof(_type));
+	if (ptr)
+		new(ptr) _type(std::forward<Args>(args)...);
+	return ptr;
+}
+
+template<typename _type>
+void tyDestroy(_type* ptr)
+{
+	assert(ptr);
+	ptr->~_type();
+	tyMemory::free(ptr);
+	//slObjectCreator<_type>::destroy(ptr);
+}
+
+#define TY_PLACEMENT_ALLOCATOR(x)
+
+#endif
+

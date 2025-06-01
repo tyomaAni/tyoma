@@ -1,5 +1,5 @@
-﻿#include "tyoma.h"
-#include "tyoma/Math.h"
+﻿#include "Tyoma.h"
+#include "Tyoma/Math.h"
 
 
 /// ======================================================================================

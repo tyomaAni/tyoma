@@ -1,13 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36127.28 d17.14
+VisualStudioVersion = 17.14.36127.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testapp", "testapp\testapp.vcxproj", "{427A77F1-D7C1-4B9E-95C5-3C827DB9D2C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tyoma.math", "tyoma.math\tyoma.math.vcxproj", "{7C37DC78-BBF8-4011-A378-2E22876BEE18}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tyoma.Math", "tyoma.math\tyoma.math.vcxproj", "{7C37DC78-BBF8-4011-A378-2E22876BEE18}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tyoma.Base", "Tyoma.Base\Tyoma.Base.vcxproj", "{7C37DC78-BBF1-4011-A378-2E22876BEE18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18} = {7C37DC78-BBF8-4012-A378-2E22876BEE18}
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18} = {7C37DC78-BBF8-4312-A378-2E22876BEE18}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tyoma.String", "Tyoma.String\Tyoma.String.vcxproj", "{7C37DC78-BBF8-4012-A378-2E22876BEE18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18} = {7C37DC78-BBF8-4312-A378-2E22876BEE18}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tyoma.Memory", "Tyoma.Memory\Tyoma.Memory.vcxproj", "{7C37DC78-BBF8-4312-A378-2E22876BEE18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,12 +46,39 @@ Global
 		{7C37DC78-BBF8-4011-A378-2E22876BEE18}.Release|x64.Build.0 = Release|x64
 		{7C37DC78-BBF8-4011-A378-2E22876BEE18}.Release|x86.ActiveCfg = Release|Win32
 		{7C37DC78-BBF8-4011-A378-2E22876BEE18}.Release|x86.Build.0 = Release|Win32
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Debug|x64.ActiveCfg = Debug|x64
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Debug|x64.Build.0 = Debug|x64
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Debug|x86.ActiveCfg = Debug|Win32
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Debug|x86.Build.0 = Debug|Win32
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Release|x64.ActiveCfg = Release|x64
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Release|x64.Build.0 = Release|x64
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Release|x86.ActiveCfg = Release|Win32
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18}.Release|x86.Build.0 = Release|Win32
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Debug|x64.ActiveCfg = Debug|x64
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Debug|x64.Build.0 = Debug|x64
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Debug|x86.ActiveCfg = Debug|Win32
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Debug|x86.Build.0 = Debug|Win32
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Release|x64.ActiveCfg = Release|x64
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Release|x64.Build.0 = Release|x64
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Release|x86.ActiveCfg = Release|Win32
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18}.Release|x86.Build.0 = Release|Win32
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Debug|x64.ActiveCfg = Debug|x64
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Debug|x64.Build.0 = Debug|x64
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Debug|x86.ActiveCfg = Debug|Win32
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Debug|x86.Build.0 = Debug|Win32
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Release|x64.ActiveCfg = Release|x64
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Release|x64.Build.0 = Release|x64
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Release|x86.ActiveCfg = Release|Win32
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7C37DC78-BBF8-4011-A378-2E22876BEE18} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7C37DC78-BBF8-4012-A378-2E22876BEE18} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7C37DC78-BBF8-4312-A378-2E22876BEE18} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B93D450-C181-4C45-95A0-1ACF3FCD6AEB}

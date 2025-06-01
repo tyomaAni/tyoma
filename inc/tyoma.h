@@ -31,6 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "tyoma/common/Defines.h"
 #include "tyoma/common/Forward.h"
+#include "tyoma/common/Assert.h"
+#include "tyoma/common/Log.h"
+#include "tyoma/common/Stacktracer.h"
 
 
 #endif

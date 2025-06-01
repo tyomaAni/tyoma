@@ -49,6 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stddef.h> // NULL, size_t
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h> 
 #include <stdint.h> // int32_t uint32_t and other
 #include <ctype.h>  // isspace

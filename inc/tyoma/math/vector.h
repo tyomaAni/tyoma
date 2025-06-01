@@ -31,39 +31,39 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _TY_MATH_V_H_
 
 template<typename T>
-class tyVec2
+class tyVec2_t
 {
 public:
-	tyVec2() {}
-	tyVec2(T v) : x(v), y(v) {}
-	tyVec2(T _x, T _y) : x(_x), y(_y) {}
-	tyVec2(const tyVec2& o) : x(o.x), y(o.y){}
-	~tyVec2() {}
+	tyVec2_t() {}
+	tyVec2_t(T v) : x(v), y(v) {}
+	tyVec2_t(T _x, T _y) : x(_x), y(_y) {}
+	tyVec2_t(const tyVec2_t& o) : x(o.x), y(o.y){}
+	~tyVec2_t() {}
 	template<typename other_type>
 	void Set(other_type v) { x = y = static_cast<T>(v); }
 	template<typename other_type>
 	void Set(other_type _x, other_type _y) { x = static_cast<T>(_x); y = static_cast<T>(_y); }
 	template<typename T2>
-	tyVec2<T2> operator*(T2 v)const { tyVec2<T2> r; r.x = x * v; r.y = y * v; return r; }
+	tyVec2_t<T2> operator*(T2 v)const { tyVec2_t<T2> r; r.x = x * v; r.y = y * v; return r; }
 	template<typename T2>
-	tyVec2<T2> operator+(const tyVec2<T2>& v)const { tyVec2<T2> r(x + v.x, y + v.y); return r; }
+	tyVec2_t<T2> operator+(const tyVec2_t<T2>& v)const { tyVec2_t<T2> r(x + v.x, y + v.y); return r; }
 	template<typename T2>
-	tyVec2<T2> operator-(const tyVec2<T2>& v)const { tyVec2<T2> r(x - v.x, y - v.y); return r; }
+	tyVec2_t<T2> operator-(const tyVec2_t<T2>& v)const { tyVec2_t<T2> r(x - v.x, y - v.y); return r; }
 	template<typename T2>
-	tyVec2<T2> operator*(const tyVec2<T2>& v)const { tyVec2<T2> r(x * v.x, y * v.y); return r; }
+	tyVec2_t<T2> operator*(const tyVec2_t<T2>& v)const { tyVec2_t<T2> r(x * v.x, y * v.y); return r; }
 	template<typename T2>
-	tyVec2<T2> operator/(const tyVec2<T2>& v)const { tyVec2<T2> r(x / v.x, y / v.y); return r; }
-	tyVec2<T> operator-()const { tyVec2<T> r(-x, -y); return r; }
+	tyVec2_t<T2> operator/(const tyVec2_t<T2>& v)const { tyVec2_t<T2> r(x / v.x, y / v.y); return r; }
+	tyVec2_t<T> operator-()const { tyVec2_t<T> r(-x, -y); return r; }
 	template<typename T2>
-	tyVec2<T>& operator=(const tyVec2<T2>& v) { x = static_cast<T>(v.x); y = static_cast<T>(v.y); }
+	tyVec2_t<T>& operator=(const tyVec2_t<T2>& v) { x = static_cast<T>(v.x); y = static_cast<T>(v.y); }
 	template<typename T2>
-	void operator+=(const tyVec2<T2>& v) { x += static_cast<T>(v.x); y += static_cast<T>(v.y); }
+	void operator+=(const tyVec2_t<T2>& v) { x += static_cast<T>(v.x); y += static_cast<T>(v.y); }
 	template<typename T2>
-	void operator-=(const tyVec2<T2>& v) { x -= static_cast<T>(v.x); y -= static_cast<T>(v.y); }
+	void operator-=(const tyVec2_t<T2>& v) { x -= static_cast<T>(v.x); y -= static_cast<T>(v.y); }
 	template<typename T2>
-	void operator*=(const tyVec2<T2>& v) { x *= static_cast<T>(v.x); y *= static_cast<T>(v.y); }
+	void operator*=(const tyVec2_t<T2>& v) { x *= static_cast<T>(v.x); y *= static_cast<T>(v.y); }
 	template<typename T2>
-	void operator/=(const tyVec2<T2>& v) { x /= static_cast<T>(v.x); y /= static_cast<T>(v.y); }
+	void operator/=(const tyVec2_t<T2>& v) { x /= static_cast<T>(v.x); y /= static_cast<T>(v.y); }
 	template<typename T2>
 	void operator+=(T2 v) { x += static_cast<T>(v); y += static_cast<T>(v); }
 	template<typename T2>
@@ -86,19 +86,20 @@ public:
 	T y = static_cast<T>(0);
 	T* Data() { return &x; }
 };
-using tyVec2f = tyVec2<float32_t>;
-using tyVec2i = tyVec2<int32_t>;
-using tyVec2u = tyVec2<uint32_t>;
+using tyVec2 = tyVec2_t<float64_t>;
+using tyVec2f = tyVec2_t<float32_t>;
+using tyVec2i = tyVec2_t<int32_t>;
+using tyVec2u = tyVec2_t<uint32_t>;
 
 template<typename T>
-class tyVec3
+class tyVec3_t
 {
 public:
-	tyVec3() {}
-	tyVec3(T v) : x(v), y(v), z(v) {}
-	tyVec3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
-	tyVec3(const tyVec3& o) : x(o.x), y(o.y), z(o.z) {}
-	~tyVec3() {}
+	tyVec3_t() {}
+	tyVec3_t(T v) : x(v), y(v), z(v) {}
+	tyVec3_t(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
+	tyVec3_t(const tyVec3_t& o) : x(o.x), y(o.y), z(o.z) {}
+	~tyVec3_t() {}
 	template<typename other_type>
 	void Set(other_type v) { x = y = z = static_cast<T>(v); }
 	template<typename other_type>
@@ -106,18 +107,18 @@ public:
 		x = static_cast<T>(_x); y = static_cast<T>(_y); z = static_cast<T>(_z);
 	}
 	template<typename T2>
-	tyVec3<T2> operator*(T2 v)const { return tyVec3<T2>(x * v, y * v, z * v); }
+	tyVec3_t<T2> operator*(T2 v)const { return tyVec3_t<T2>(x * v, y * v, z * v); }
 	template<typename T2>
-	tyVec3<T2> operator+(const tyVec3<T2>& v)const { return tyVec3<T2>(x + v, y + v, z + v); }
+	tyVec3_t<T2> operator+(const tyVec3_t<T2>& v)const { return tyVec3_t<T2>(x + v, y + v, z + v); }
 	template<typename T2>
-	tyVec3<T2> operator-(const tyVec3<T2>& v)const { return tyVec3<T2>(x - v, y - v, z - v); }
+	tyVec3_t<T2> operator-(const tyVec3_t<T2>& v)const { return tyVec3_t<T2>(x - v, y - v, z - v); }
 	template<typename T2>
-	tyVec3<T2> operator*(const tyVec3<T2>& v)const { return tyVec3<T2>(x * v, y * v, z * v); }
+	tyVec3_t<T2> operator*(const tyVec3_t<T2>& v)const { return tyVec3_t<T2>(x * v, y * v, z * v); }
 	template<typename T2>
-	tyVec3<T2> operator/(const tyVec3<T2>& v)const { return tyVec3<T2>(x / v, y / v, z / v); }
-	tyVec3<T> operator-()const { return tyVec3<T>(-x, -y, -z); }
+	tyVec3_t<T2> operator/(const tyVec3_t<T2>& v)const { return tyVec3_t<T2>(x / v, y / v, z / v); }
+	tyVec3_t<T> operator-()const { return tyVec3_t<T>(-x, -y, -z); }
 	template<typename T2>
-	tyVec3<T2>& operator=(const tyVec3<T2>& v)
+	tyVec3_t<T2>& operator=(const tyVec3_t<T2>& v)
 	{
 		x = static_cast<T>(v.x);
 		y = static_cast<T>(v.y);
@@ -125,28 +126,28 @@ public:
 		return *this;
 	}
 	template<typename T2>
-	void operator+=(const tyVec3<T2>& v)
+	void operator+=(const tyVec3_t<T2>& v)
 	{
 		x += static_cast<T>(v.x);
 		y += static_cast<T>(v.y);
 		z += static_cast<T>(v.z);
 	}
 	template<typename T2>
-	void operator-=(const tyVec3<T2>& v)
+	void operator-=(const tyVec3_t<T2>& v)
 	{
 		x -= static_cast<T>(v.x);
 		y -= static_cast<T>(v.y);
 		z -= static_cast<T>(v.z);
 	}
 	template<typename T2>
-	void operator*=(const tyVec3<T2>& v)
+	void operator*=(const tyVec3_t<T2>& v)
 	{
 		x *= static_cast<T>(v.x);
 		y *= static_cast<T>(v.y);
 		z *= static_cast<T>(v.z);
 	}
 	template<typename T2>
-	void operator/=(const tyVec3<T2>& v)
+	void operator/=(const tyVec3_t<T2>& v)
 	{
 		x /= static_cast<T>(v.x);
 		y /= static_cast<T>(v.y);
@@ -183,7 +184,7 @@ public:
 	}
 
 	template<typename T2>
-	void Cross(const tyVec3<T2>& a, tyVec3<T>& out)const {
+	void Cross(const tyVec3_t<T2>& a, tyVec3_t<T>& out)const {
 		out.x = (y * static_cast<T>(a.z)) - (z * static_cast<T>(a.y));
 		out.y = (z * static_cast<T>(a.x)) - (x * static_cast<T>(a.z));
 		out.z = (x * static_cast<T>(a.y)) - (y * static_cast<T>(a.x));
@@ -200,7 +201,7 @@ public:
 	}
 
 	T Dot()const { return (x * x) + (y * y) + (z * z); }
-	T Dot(const tyVec3<T>& v)const { return (x * v.x) + (y * v.y) + (z * v.z); }
+	T Dot(const tyVec3_t<T>& v)const { return (x * v.x) + (y * v.y) + (z * v.z); }
 	T Length() const { return std::sqrt((x * x) + (y * y) + (z * z)); }
 
 	T x = static_cast<T>(0);
@@ -208,19 +209,20 @@ public:
 	T z = static_cast<T>(0);
 	T* Data() { return &x; }
 };
-using tyVec3f = tyVec3<float32_t>;
-using tyVec3i = tyVec3<int32_t>;
-using tyVec3u = tyVec3<uint32_t>;
+using tyVec3 = tyVec3_t<float64_t>;
+using tyVec3f = tyVec3_t<float32_t>;
+using tyVec3i = tyVec3_t<int32_t>;
+using tyVec3u = tyVec3_t<uint32_t>;
 
 template<typename T>
-class tyVec4
+class tyVec4_t
 {
 public:
-	tyVec4() {}
-	tyVec4(T v) : x(v), y(v), z(v), w(v) {}
-	tyVec4(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w) {}
-	tyVec4(const tyVec4& o) : x(o.x), y(o.y), z(o.z), w(o.w) {}
-	~tyVec4() {}
+	tyVec4_t() {}
+	tyVec4_t(T v) : x(v), y(v), z(v), w(v) {}
+	tyVec4_t(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w) {}
+	tyVec4_t(const tyVec4_t& o) : x(o.x), y(o.y), z(o.z), w(o.w) {}
+	~tyVec4_t() {}
 	template<typename other_type>
 	void Set(other_type v) { x = y = z = w = static_cast<T>(v); }
 	template<typename other_type>
@@ -228,18 +230,18 @@ public:
 		x = static_cast<T>(_x); y = static_cast<T>(_y); z = static_cast<T>(_z); w = static_cast<T>(_w);
 	}
 	template<typename T2>
-	tyVec4<T2> operator*(T2 v)const { return tyVec4<T2>(x * v, y * v, z * v); }
+	tyVec4_t<T2> operator*(T2 v)const { return tyVec4_t<T2>(x * v, y * v, z * v, w * v); }
 	template<typename T2>
-	tyVec4<T2> operator+(const tyVec4<T2>& v)const { return tyVec4<T2>(x + v, y + v, z + v, w + v); }
+	tyVec4_t<T2> operator+(const tyVec4_t<T2>& v)const { return tyVec4_t<T2>(x + v, y + v, z + v, w + v); }
 	template<typename T2>
-	tyVec4<T2> operator-(const tyVec4<T2>& v)const { return tyVec4<T2>(x - v, y - v, z - v, w - v); }
+	tyVec4_t<T2> operator-(const tyVec4_t<T2>& v)const { return tyVec4_t<T2>(x - v, y - v, z - v, w - v); }
 	template<typename T2>
-	tyVec4<T2> operator*(const tyVec4<T2>& v)const { return tyVec4<T2>(x * v, y * v, z * v, w * v); }
+	tyVec4_t<T2> operator*(const tyVec4_t<T2>& v)const { return tyVec4_t<T2>(x * v, y * v, z * v, w * v); }
 	template<typename T2>
-	tyVec4<T2> operator/(const tyVec4<T2>& v)const { return tyVec4<T2>(x / v, y / v, z / v, w / v); }
-	tyVec4<T> operator-()const { return tyVec4<T>(-x, -y, -z, -w); }
+	tyVec4_t<T2> operator/(const tyVec4_t<T2>& v)const { return tyVec4_t<T2>(x / v, y / v, z / v, w / v); }
+	tyVec4_t<T> operator-()const { return tyVec4_t<T>(-x, -y, -z, -w); }
 	template<typename T2>
-	tyVec4<T>& operator=(const tyVec4<T2>& v)
+	tyVec4_t<T>& operator=(const tyVec4_t<T2>& v)
 	{
 		x = static_cast<T>(v.x);
 		y = static_cast<T>(v.y);
@@ -248,7 +250,7 @@ public:
 		return *this;
 	}
 	template<typename T2>
-	void operator+=(const tyVec4<T2>& v)
+	void operator+=(const tyVec4_t<T2>& v)
 	{
 		x += static_cast<T>(v.x);
 		y += static_cast<T>(v.y);
@@ -256,7 +258,7 @@ public:
 		w += static_cast<T>(v.w);
 	}
 	template<typename T2>
-	void operator-=(const tyVec4<T2>& v)
+	void operator-=(const tyVec4_t<T2>& v)
 	{
 		x -= static_cast<T>(v.x);
 		y -= static_cast<T>(v.y);
@@ -264,7 +266,7 @@ public:
 		w -= static_cast<T>(v.w);
 	}
 	template<typename T2>
-	void operator*=(const tyVec4<T2>& v)
+	void operator*=(const tyVec4_t<T2>& v)
 	{
 		x *= static_cast<T>(v.x);
 		y *= static_cast<T>(v.y);
@@ -272,7 +274,7 @@ public:
 		w *= static_cast<T>(v.w);
 	}
 	template<typename T2>
-	void operator/=(const tyVec4<T2>& v)
+	void operator/=(const tyVec4_t<T2>& v)
 	{
 		x /= static_cast<T>(v.x);
 		y /= static_cast<T>(v.y);
@@ -314,7 +316,7 @@ public:
 	}
 
 	template<typename T2>
-	void Cross(const tyVec4<T2>& a, tyVec4<T>& out)const {
+	void Cross(const tyVec4_t<T2>& a, tyVec4_t<T>& out)const {
 		out.x = (y * static_cast<T>(a.z)) - (z * static_cast<T>(a.y));
 		out.y = (z * static_cast<T>(a.x)) - (x * static_cast<T>(a.z));
 		out.z = (x * static_cast<T>(a.y)) - (y * static_cast<T>(a.x));
@@ -332,7 +334,7 @@ public:
 	}
 
 	T Dot()const { return (x * x) + (y * y) + (z * z) + (w * w); }
-	T Dot(const tyVec4<T>& v)const { return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w); }
+	T Dot(const tyVec4_t<T>& v)const { return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w); }
 	T Length() const { return std::sqrt((x * x) + (y * y) + (z * z) + (w * w)); }
 	T x = static_cast<T>(0);
 	T y = static_cast<T>(0);
@@ -340,12 +342,15 @@ public:
 	T w = static_cast<T>(0);
 	T* Data() { return &x; }
 };
-using tyVec4f = tyVec4<float32_t>;
-using tyVec4i = tyVec4<int32_t>;
-using tyVec4u = tyVec4<uint32_t>;
+using tyVec4 = tyVec4_t<float64_t>;
+using tyVec4f = tyVec4_t<float32_t>;
+using tyVec4i = tyVec4_t<int32_t>;
+using tyVec4u = tyVec4_t<uint32_t>;
 
 const tyVec4f tyVec4fFltMax = tyVec4f(FLT_MAX);
 const tyVec4f tyVec4fFltMaxNeg = tyVec4f(-FLT_MAX);
+
+TY_FORCEINLINE tyVec4f operator*(const float32_t& s, const tyVec4f& v) { return v * s; }
 
 #endif
 

@@ -1,13 +1,15 @@
-﻿#include "tyoma.h"
-#include "tyoma/Math.h"
+﻿#include "Tyoma.h"
+#include "Tyoma/Math.h"
 
-#pragma comment(lib, "tyoma.math.lib")
+#pragma comment(lib, "Tyoma.Math.lib")
+#pragma comment(lib, "Tyoma.Base.lib")
 
 int main()
 {
-
 	tyVec2f v;
 	v.Set(443.f);
+
+	TY_ASSERT_ST(1 == 2);
 
 	return 1;
 }

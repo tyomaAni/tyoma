@@ -263,5 +263,7 @@ public:
 	T* Data() { return &m_data[0].x; }
 };
 
+using tMat4 = tMatrix4_t<real_t>;
+
 #endif
 

@@ -9,7 +9,7 @@
 int main()
 {
 	tVec2f v;
-	v.Set(443.f);
+	v.Set(tMath::DegToRad(443.f));
 
 	tStringA stra;
 	stra.Append("test");

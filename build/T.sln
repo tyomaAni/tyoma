@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "T.Math", "T.Math\T.Math.vcxproj", "{7C37DC78-BBF8-4011-A378-2E22876BEE18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C37DC78-BBF1-4011-A378-2E22876BEE18} = {7C37DC78-BBF1-4011-A378-2E22876BEE18}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "T.Base", "T.Base\T.Base.vcxproj", "{7C37DC78-BBF1-4011-A378-2E22876BEE18}"
 	ProjectSection(ProjectDependencies) = postProject

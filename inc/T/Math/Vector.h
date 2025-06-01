@@ -109,13 +109,13 @@ public:
 	template<typename T2>
 	tVec3_t<T2> operator*(T2 v)const { return tVec3_t<T2>(x * v, y * v, z * v); }
 	template<typename T2>
-	tVec3_t<T2> operator+(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x + v, y + v, z + v); }
+	tVec3_t<T2> operator+(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x + v.x, y + v.y, z + v.z); }
 	template<typename T2>
-	tVec3_t<T2> operator-(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x - v, y - v, z - v); }
+	tVec3_t<T2> operator-(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x - v.x, y - v.y, z - v.z); }
 	template<typename T2>
-	tVec3_t<T2> operator*(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x * v, y * v, z * v); }
+	tVec3_t<T2> operator*(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x * v.x, y * v.y, z * v.z); }
 	template<typename T2>
-	tVec3_t<T2> operator/(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x / v, y / v, z / v); }
+	tVec3_t<T2> operator/(const tVec3_t<T2>& v)const { return tVec3_t<T2>(x / v.x, y / v.y, z / v.z); }
 	tVec3_t<T> operator-()const { return tVec3_t<T>(-x, -y, -z); }
 	template<typename T2>
 	tVec3_t<T2>& operator=(const tVec3_t<T2>& v)
@@ -225,20 +225,19 @@ public:
 	~tVec4_t() {}
 	template<typename other_type>
 	void Set(other_type v) { x = y = z = w = static_cast<T>(v); }
-	template<typename other_type>
-	void Set(other_type _x, other_type _y, other_type _z, other_type _w) {
-		x = static_cast<T>(_x); y = static_cast<T>(_y); z = static_cast<T>(_z); w = static_cast<T>(_w);
+	void Set(T _x, T _y, T _z, T _w) {
+		x = _x; y = _y; z = _z; w = _w;
 	}
 	template<typename T2>
 	tVec4_t<T2> operator*(T2 v)const { return tVec4_t<T2>(x * v, y * v, z * v, w * v); }
 	template<typename T2>
-	tVec4_t<T2> operator+(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x + v, y + v, z + v, w + v); }
+	tVec4_t<T2> operator+(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x + v.x, y + v.y, z + v.z, w + v.z); }
 	template<typename T2>
-	tVec4_t<T2> operator-(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x - v, y - v, z - v, w - v); }
+	tVec4_t<T2> operator-(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x - v.x, y - v.y, z - v.z, w - v.z); }
 	template<typename T2>
-	tVec4_t<T2> operator*(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x * v, y * v, z * v, w * v); }
+	tVec4_t<T2> operator*(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x * v.x, y * v.y, z * v.z, w * v.z); }
 	template<typename T2>
-	tVec4_t<T2> operator/(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x / v, y / v, z / v, w / v); }
+	tVec4_t<T2> operator/(const tVec4_t<T2>& v)const { return tVec4_t<T2>(x / v.x, y / v.y, z / v.z, w / v.z); }
 	tVec4_t<T> operator-()const { return tVec4_t<T>(-x, -y, -z, -w); }
 	template<typename T2>
 	tVec4_t<T>& operator=(const tVec4_t<T2>& v)

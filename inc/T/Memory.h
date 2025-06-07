@@ -58,7 +58,7 @@ void tDestroy(_type* ptr)
 	tMemory::Free(ptr);
 }
 
-#define TY_PLACEMENT_ALLOCATOR(c) void* operator new(std::size_t count){ return (c*)tMemory::Malloc(count);}\
+#define T_PLACEMENT_ALLOCATOR(c) void* operator new(std::size_t count){ return (c*)tMemory::Malloc(count);}\
 void operator delete(void* ptr){if (ptr) tDestroy(ptr);}
 
 #define TSAFE_DESTROY(x) if(x){tDestroy(x);x=0;}

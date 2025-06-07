@@ -26,25 +26,46 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef __T_GUIELMNT_H__
+#define __T_GUIELMNT_H__
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#include "T/Common/Hierarchy.h"
+#include "T/GUI/Common.h"
+
+class tGUIElement : public tGUICommon
+{
+protected:
+	tGUIWindow* m_window = 0;
+
+public:
+	tGUIElement(tGUIWindow*, const tVec2f& position, const tVec2f& size);
+	virtual ~tGUIElement();
+
+	tGUIWindow* GetWindow() { return m_window; }
+
+	// basic rebuild, common for all elements
+	virtual void Rebuild() override;
+	// basic things for OnMouseEnter OnClickLMB and other
+	virtual void Update() override;
+
+	enum Alignment
+	{
+		Left = 0x1,
+		Top = 0x2,
+		Right = 0x4,
+		Bottom = 0x8,
+		LeftTop = Left | Top,
+		RightTop = Top | Right,
+		LeftBottom = Left | Bottom,
+		RightBottom = Right | Bottom,
+		Center = Left | Top | Right | Bottom
+	};
+	Alignment m_alignment = Alignment::Center;
+
+	// Make this element last for drawing, first for input.
+	// It will be like on top of all other elements.
+	// It's just changing the order.
+	virtual void ToTop();
+};
 
 #endif

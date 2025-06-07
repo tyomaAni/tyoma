@@ -26,25 +26,20 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef _TY_SWW32_H_
+#define _TY_SWW32_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+/// Must be included Windows.h
+
+struct tSysWindowWin32
+{
+	wchar_t m_className[20];
+	HWND m_hWnd = 0;
+	HRAWINPUT m_rawInputData[0xff];
+	LONG m_style = 0;
+	LONG m_stylePreFullscreen = 0;
+	WINDOWPLACEMENT m_wndPlcmnt;
+};
+
 
 #endif

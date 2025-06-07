@@ -21,9 +21,12 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\T.Base\T.Base.Assert.cpp" />
     <ClCompile Include="..\..\src\T.Base\T.Base.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.Framework.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.Input.cpp" />
     <ClCompile Include="..\..\src\T.Base\T.Base.Log.cpp" />
     <ClCompile Include="..\..\src\T.Base\T.Base.Stacktracer.cpp" />
     <ClCompile Include="..\..\src\T.Base\T.Base.StacktracerE.cpp" />
+    <ClCompile Include="..\..\src\T.Base\T.Base.SysWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

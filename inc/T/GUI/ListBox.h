@@ -25,26 +25,49 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#pragma once
+#ifndef __T_GUILISTBOX_H_
+#define __T_GUILISTBOX_H_
+
+struct tGUIListBoxItem
+{
+	tString m_text;
+	uint32_t m_id = 0;
+	void* m_data = 0;
+
+	bool m_isSelected = false;
+};
+
+class tGUIListBox : public tGUIElement
+{
+	tArray<tGUIListBoxItem*> m_items;
+	float m_lineHeight = 0.f;
+	size_t m_firstItemIndexForDraw = 0;
+	size_t m_numberOfVisibleLines = 0;
+
+public:
+	tGUIListBox(tGUIWindow*, const tVec2i& position, const tVec2i& size);
+	virtual ~tGUIListBox();
+
+	virtual void Rebuild() override;
+	virtual void Update() override;
+	virtual void Draw(tGS* gs, float dt) override;	
+	
+	virtual void UpdateContentSize() override;
+
+	tGUIListBoxItem* AddItem(const char32_t*, uint32_t id, void* data);
+	void RemoveItem(tGUIListBoxItem*);
+
+	tArray<tGUIListBoxItem*>* GetItems() { return &m_items; }
+
+	bool m_drawItemBG = true;
+	bool m_multiSelect = false;
+
+	// return true if need to select
+	virtual bool OnSelect(tGUIListBoxItem*) { return true; }
+	// return true if need to deselect
+	virtual bool OnDeSelect(tGUIListBoxItem*) { return true; }
+};
 
 #endif

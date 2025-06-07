@@ -25,26 +25,31 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#pragma once
+#ifndef __T_GUISTATICTXT_H_
+#define __T_GUISTATICTXT_H_
+
+class tGUIStaticText : public tGUIElement
+{
+	tString m_text;
+	bool m_useDrawLimit = false;
+	size_t m_drawLimit = 0;
+	float m_lineHeight = 0.f;
+public:
+	tGUIStaticText(tGUIWindow*, const tVec2i& position, const tVec2i& size);
+	virtual ~tGUIStaticText();
+
+	virtual void Rebuild() final;
+	virtual void Update() final;
+	virtual void Draw(tGS* gs, float dt) final;	
+
+	virtual void SetText(const tString&);
+	virtual void UseDrawLimit(bool use, size_t limit)
+	{
+		m_useDrawLimit = use;
+		m_drawLimit = limit;
+	}
+};
 
 #endif

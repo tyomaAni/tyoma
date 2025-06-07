@@ -1,6 +1,7 @@
 ﻿#include "T.h"
 #include "T/Math.h"
 #include "T/String.h"
+#include "T/SysWindow.h"
 
 #pragma comment(lib, "T.Math.lib")
 #pragma comment(lib, "T.Base.lib")

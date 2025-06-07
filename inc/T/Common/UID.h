@@ -26,25 +26,23 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef _TY_UID_H_
+#define _TY_UID_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+// Unique ID
+// Like a GUID
+struct tUID
+{
+	uint32_t d1;
+	uint16_t d2;
+	uint16_t d3;
+	uint16_t d4;
+	uint8_t  d5[6];
+};
+
+#define tDEFINE_UID(name, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10) \
+        const tUID name \
+                = { d1, d2, d3, d4, d5,  d6,  d7,  d8,  d9,  d10 }
+
 
 #endif

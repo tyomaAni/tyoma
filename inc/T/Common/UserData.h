@@ -26,25 +26,24 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef _TY_UD_H_
+#define _TY_UD_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#include "T/Memory.h"
+
+/// many classes needs user data
+class tUserData
+{
+	void* m_data = 0;
+public:
+	tUserData() {}
+	virtual ~tUserData() {}
+	T_PLACEMENT_ALLOCATOR(tUserData);
+
+	virtual void* GetUserData() { return m_data; }
+	virtual void SetUserData(void* d) { m_data = d; }
+};
+
+
 
 #endif

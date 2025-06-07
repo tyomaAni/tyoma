@@ -29,11 +29,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _TYOMA_H_
 #define _TYOMA_H_
 
-#include "T/common/Defines.h"
-#include "T/common/Forward.h"
-#include "T/common/Assert.h"
-#include "T/common/Log.h"
-#include "T/common/Stacktracer.h"
+#include "T/Common/Defines.h"
+#include "T/Common/Forward.h"
+#include "T/Common/Assert.h"
+#include "T/Common/Log.h"
+#include "T/Common/Stacktracer.h"
+#include "T/Common/UserData.h"
+#include "T/Common/UID.h"
+#include "T/Common/Framework.h"
+#include "T/Common/SysWindow.h"
+#include "T/Common/Input.h"
 
 
 #endif

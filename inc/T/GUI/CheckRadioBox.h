@@ -25,26 +25,29 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#pragma once
+#ifndef __T_GUICHRADBOX_H__
+#define __T_GUICHRADBOX_H__
+
+class tGUICheckRadioBox : public tGUIButton
+{
+public:
+	tGUICheckRadioBox(tGUIWindow*, const tVec2i& position, const tVec2i& size);
+	virtual ~tGUICheckRadioBox();
+	virtual void Rebuild() final;
+	virtual void Draw(tGS* gs, float dt) final;	
+	float m_iconVerticalIndent = 0.f;
+
+
+	virtual void OnClickLMB() override;
+	bool m_isChecked = false;
+
+	virtual void OnCheck();
+	virtual void OnUnCheck();
+
+	bool m_asRadioButton = false;
+	uint32_t m_radiouGroup = 0;
+};
 
 #endif

@@ -26,25 +26,49 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef __T_GUIWND_H__
+#define __T_GUIWND_H__
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#include "T/String.h"
+
+class tGUIWindow : public tGUICommon
+{
+public:
+	enum
+	{
+		windowFlag_withCloseButton = 0x1,
+		windowFlag_withCollapseButton = 0x2,
+		windowFlag_withTitleBar = 0x4,
+		windowFlag_canMove = 0x8,
+		windowFlag_canResize = 0x10,
+		windowFlag_canDock = 0x20,
+		windowFlag_canToTop = 0x40,
+	};
+
+private:
+	tGUIElement* m_rootElement = 0;
+
+	tVec2i m_sizeMinimum = tVec2i(100.f, 30.f);
+
+	tString m_title;
+	uint32_t m_windowFlags = 0;
+public:
+	tGUIWindow(const tVec2i& position, const tVec2i& size);
+	virtual ~tGUIWindow();
+
+	// need Rebuild
+	void SetPositionAndSize(const tVec2i& p, const tVec2i& sz);
+	
+	void SetSizeMinimum(const tVec2i& sz) { m_sizeMinimum = sz; }
+
+	tGUIElement* GetRootElement() { return m_rootElement; }
+
+	virtual void Rebuild() override;
+	virtual void Update() override;
+	virtual void Draw(tGS* gs, float dt) override;
+	
+	void SetTitle(const char32_t*);
+};
+
 
 #endif

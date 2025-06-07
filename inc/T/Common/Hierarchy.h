@@ -26,25 +26,33 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef _TY_HH_H_
+#define _TY_HH_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#include "T/Containers/List.h"
+
+class tHierarchy
+{
+protected:
+	tHierarchy* m_parent = 0;
+	tList<tHierarchy*> m_children;
+public:
+	tHierarchy() {}
+	virtual ~tHierarchy() {}
+
+	void SetParent(tHierarchy* o)
+	{
+		if (m_parent)
+			m_parent->m_children.EraseFirst(this);
+
+		m_parent = o;
+
+		if (o)
+			m_parent->m_children.PushBack(this);
+	}
+
+	virtual tHierarchy* GetParent() { return m_parent; }
+	virtual tList<tHierarchy*>* GetChildren() { return &m_children; }
+};
 
 #endif

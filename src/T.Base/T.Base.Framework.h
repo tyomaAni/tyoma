@@ -26,25 +26,32 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
-#ifndef _TY_FWD_H_
-#define _TY_FWD_H_
+#ifndef _H_TBF_H_
+#define _H_TBF_H_
 
-class tGS;
-class tMeshLoader;
-class tMeshLoaderCallback;
-class tSceneCamera;
-class tPolygonMesh;
-class tImageLoader;
-class tImage;
-class tGUIFont;
-class tGUIStyle;
-enum class tGUIStyleTheme;
-class tGUIWindow;
-class tGUIElement;
-class tGUIState;
-//class tGUIDrawTextCallback;
-enum class tGUIDefaultFont;
-class tSprite;
-class tTexture;
+#include "T/Containers/Array.h"
+#include "T/Containers/List.h"
+#include "T/GUI.h"
+
+class tFrameworkImpl
+{
+public:
+	tFrameworkImpl();
+	~tFrameworkImpl();
+
+	tFrameworkCallback* m_callback = 0;
+	tInputData m_input;
+	float32_t m_deltaTime = 0.f;
+	void OnDestroy();
+	
+	tArray<tGUIFont*> m_defaultFonts;
+	tArray<tTexture*> m_texturesForDestroy;
+
+	tGUIStyle m_GUIStyleThemeLight;
+	tGUIStyle m_GUIStyleThemeDark;
+	tList<slGUIWindow*> m_GUIWindows;
+	tGUIState m_GUIState;
+	void UpdateGUI();
+};
 
 #endif

@@ -27,6 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "T.h"
+#include "T/GS.h"
 #include "T.Base.Framework.h"
 
 static uint8_t g_defaultFontPNG[] = {
@@ -99,65 +100,65 @@ void tFrameworkImpl::OnDestroy()
 		{
 			auto nw = cw->m_right;
 
-			slFramework::Destroy(cw->m_data);
+			TSAFE_DESTROY(cw->m_data);
 			if (cw == lw)
 				break;
 			cw = nw;
 		}
-		g_framework->m_GUIWindows.clear();
+		g_framework->m_GUIWindows.Clear();
 	}
 	_onDestroy_archive();
-	if (g_framework->m_imageLoaders.size())
+	if (g_framework->m_imageLoaders.Size())
 	{
-		for (auto o : g_framework->m_imageLoaders)
+		for (size_t i = 0, sz = g_framework->m_imageLoaders.Size(); i < sz; ++i)
 		{
-			slDestroy(o);
+			TSAFE_DESTROY(g_framework->m_imageLoaders[i]);
 		}
-		g_framework->m_imageLoaders.clear();
+		g_framework->m_imageLoaders.Clear();
 	}
-	if (g_framework->m_meshLoaders.size())
+	if (g_framework->m_meshLoaders.Size())
 	{
-		for (auto o : g_framework->m_meshLoaders)
+		for (size_t i = 0, sz = g_framework->m_meshLoaders.Size(); i < sz; ++i)
 		{
-			slDestroy(o);
+			TSAFE_DESTROY(g_framework->m_meshLoaders[i]);
 		}
-		g_framework->m_meshLoaders.clear();
+		g_framework->m_meshLoaders.Clear();
 	}
-	if (g_framework->m_gss.size())
+	if (g_framework->m_gss.Size())
 	{
-		for (auto o : g_framework->m_gss)
+		for (size_t i = 0, sz = g_framework->m_gss.Size(); i < sz; ++i)
 		{
-			o->Shutdown();
-			slDestroy(o);
+			g_framework->m_gss[i]->Shutdown();
+			TSAFE_DESTROY(g_framework->m_gss[i]);
 		}
-		g_framework->m_gss.clear();
+		g_framework->m_gss.Clear();
 	}
 }
 
-void slFramework::Start(slFrameworkCallback* cb)
+void tFramework::Start(tFrameworkCallback* cb)
 {
-	SL_ASSERT_ST(cb);
-	SL_ASSERT_ST(g_framework == 0);
+	T_ASSERT_ST(cb);
+	T_ASSERT_ST(g_framework == 0);
 	if (!g_framework)
 	{
-		slLog::PrintInfo("Init SlowLib...\n");
+		tLog::PrintInfo("Init SlowLib...\n");
 
-		g_framework = slCreate<slFrameworkImpl>();
+		g_framework = tCreate<tFrameworkImpl>();
 		g_framework->m_callback = cb;
 
-#ifdef SL_PLATFORM_WINDOWS
+#ifdef T_PLATFORM_WINDOWS
 		wchar_t pth[1000];
 		GetModuleFileName(0, pth, 1000);
 		g_framework->m_appPath = pth;
-		g_framework->m_appPath.pop_back_before(U'\\');
-		g_framework->m_appPath.replace(U'\\', U'/');
+		g_framework->m_appPath.PopBackBefore(U'\\');
+		g_framework->m_appPath.Replace(U'\\', U'/');
 #else
 #error OMG
 #endif
 
-		g_framework->m_gss.push_back(slGSD3D11_create());
-		g_framework->m_meshLoaders.push_back(slMeshLoaderOBJ_create());
-		g_framework->m_imageLoaders.push_back(slImageLoaderDefault_create());
+		g_framework->m_gss.PushBack(tGSD3D11_create());
+		g_framework->m_meshLoaders.PushBack(tMeshLoaderOBJ_create());
+		g_framework->m_imageLoaders.PushBack(tImageLoaderDefault_create());
 	}
 
 	g_framework->m_GUIStyleThemeLight.m_windowActiveBGColor1 = 0xE1E6F7;
@@ -211,66 +212,66 @@ void slFramework::Start(slFrameworkCallback* cb)
 	g_framework->m_GUIStyleThemeDark = g_framework->m_GUIStyleThemeLight;
 }
 
-void slFramework::Stop()
+void tFramework::Stop()
 {
-	SL_ASSERT_ST(g_framework);
+	T_ASSERT_ST(g_framework);
 	if (g_framework)
 	{
 		g_framework->OnDestroy();
-		slDestroy(g_framework);
+		tDestroy(g_framework);
 		g_framework = 0;
 	}
 }
 
-slString slFramework::GetAppPath()
+tString tFramework::GetAppPath()
 {
 	return g_framework->m_appPath;
 }
 
-slStringA slFramework::GetPathA(const slString& v)
+tStringA tFramework::GetPathA(const tString& v)
 {
-	slString p = g_framework->m_appPath;
-	p.append(v);
-	slStringA stra;
-	p.to_utf8(stra);
+	tString p = g_framework->m_appPath;
+	p.Append(v);
+	tStringA stra;
+	p.ToUtf8(stra);
 
-	if (!std::filesystem::exists(stra.c_str()))
+	if (!std::filesystem::exists(stra.C_Str()))
 	{
-		p.assign(v);
+		p.Assign(v);
 
-		while (p.size())
+		while (p.Size())
 		{
 			if (p[0] == U'.'
 				|| p[0] == U'\\'
 				|| p[0] == U'/')
-				p.pop_front();
+				p.PopFront();
 			else
 				break;
 		}
 
-		p.to_utf8(stra);
+		p.ToUtf8(stra);
 	}
 
 	return stra;
 }
 
-void slFramework::SetImageLoaderConvertToRGBA8(bool v)
+void tFramework::SetImageLoaderConvertToRGBA8(bool v)
 {
-	g_framework->m_imageLoaderConverToRGBA8 = v;
+	g_framework->m_imageLoaderConvertToRGBA8 = v;
 }
 
-bool slFramework::GetImageLoaderConvertToRGBA8()
+bool tFramework::GetImageLoaderConvertToRGBA8()
 {
-	return g_framework->m_imageLoaderConverToRGBA8;
+	return g_framework->m_imageLoaderConvertToRGBA8;
 }
 
-void slFramework::Update()
+void tFramework::Update()
 {
-	SL_ASSERT_ST(g_framework);
+	T_ASSERT_ST(g_framework);
 
-	slInputUpdatePre(&g_framework->m_input);
+	tInputUpdatePre(&g_framework->m_input);
 
-#ifdef SL_PLATFORM_WINDOWS
+#ifdef T_PLATFORM_WINDOWS
 	MSG msg;
 	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 	{
@@ -280,7 +281,7 @@ void slFramework::Update()
 	}
 #endif
 
-	slInputUpdatePost(&g_framework->m_input);
+	tInputUpdatePost(&g_framework->m_input);
 
 	g_framework->UpdateGUI();
 
@@ -291,58 +292,36 @@ void slFramework::Update()
 	then = now;
 }
 
-void slFrameworkCallback::OnMessage()
+void tFrameworkCallback::OnMessage()
 {
 	printf("ON MESSAGE\n");
 }
 
-slWindow* slFramework::SummonWindow(slWindowCallback* cb, int sx, int sy)
+#ifdef CreateWindow
+#undef CreateWindow
+#endif
+tSysWindow* tFramework::CreateWindow(tSysWindowCallback* cb, int sx, int sy)
 {
-	SL_ASSERT_ST(cb);
+	T_ASSERT_ST(cb);
 
-	return slCreate<slWindow>(cb, sx, sy);
+	return tCreate<tSysWindow>(cb, sx, sy);
 }
 
-float* slFramework::GetDeltaTime()
+float* tFramework::GetDeltaTime()
 {
-	SL_ASSERT_ST(g_framework);
+	T_ASSERT_ST(g_framework);
 	return &g_framework->m_deltaTime;
 }
 
-bool slFramework::PointInRect(slRect* r, slPoint* p)
+bool tFramework::PointInRect(tVec4i* r, tVec2i* p)
 {
-	SL_ASSERT_ST(r);
-	SL_ASSERT_ST(p);
-	if (p->x >= r->left) { if (p->x <= r->right) { if (p->y >= r->top) { if (p->y <= r->bottom) { return true; } } } }
+	T_ASSERT_ST(r);
+	T_ASSERT_ST(p);
+	if (p->x >= r->x) { if (p->x <= r->z) { if (p->y >= r->y) { if (p->y <= r->w) { return true; } } } }
 	return false;
 }
 
-void slFramework::PointSet(slPoint* p, int32_t x, int32_t y)
-{
-	SL_ASSERT_ST(p);
-	p->x = x;
-	p->y = y;
-}
-
-void slFramework::RectSet(slRect* rct, int32_t l, int32_t t, int32_t r, int32_t b)
-{
-	SL_ASSERT_ST(rct);
-	rct->left = l;
-	rct->top = t;
-	rct->right = r;
-	rct->bottom = b;
-}
-
-void slFramework::RectfSet(slRectf* rct, float* f)
-{
-	SL_ASSERT_ST(rct);
-	rct->left = f[0];
-	rct->top = f[1];
-	rct->right = f[2];
-	rct->bottom = f[3];
-}
-
-bool slFramework::CompareUIDs(const slUID& id1, const slUID& id2)
+bool tFramework::CompareUIDs(const tUID& id1, const tUID& id2)
 {
 	const uint8_t* b1 = (const uint8_t*)&id1.d1;
 	const uint8_t* b2 = (const uint8_t*)&id2.d1;
@@ -355,53 +334,59 @@ bool slFramework::CompareUIDs(const slUID& id1, const slUID& id2)
 }
 
 // =========== GS
-uint32_t slFramework::GetGSNum()
+uint32_t tFramework::GetGSNum()
 {
-	return (uint32_t)g_framework->m_gss.size();
+	return (uint32_t)g_framework->m_gss.Size();
 }
 
-slString slFramework::GetGSName(uint32_t i)
+tString tFramework::GetGSName(uint32_t i)
 {
-	SL_ASSERT_ST(i < g_framework->m_gss.size());
+	T_ASSERT_ST(i < g_framework->m_gss.Size());
 	return g_framework->m_gss[i]->GetName();
 }
 
-slUID slFramework::GetGSUID(uint32_t i)
+tUID tFramework::GetGSUID(uint32_t i)
 {
-	SL_ASSERT_ST(i < g_framework->m_gss.size());
+	T_ASSERT_ST(i < g_framework->m_gss.Size());
 	return g_framework->m_gss[i]->GetUID();
 }
 
-slGS* slFramework::SummonGS(slUID id)
+tGS* tFramework::CreateGS(tUID id)
 {
-	for (auto o : g_framework->m_gss)
+	for(size_t i = 0, sz = g_framework->m_gss.Size(); i < sz; ++i)
 	{
+		auto o = g_framework->m_gss[i];
+
 		if (CompareUIDs(o->GetUID(), id))
 			return o;
 	}
 	return 0;
 }
 
-slGS* slFramework::SummonGS(const char* _name)
+tGS* tFramework::CreateGS(const char* _name)
 {
-	slString name(_name);
-	for (auto o : g_framework->m_gss)
+	tString name(_name);
+	for (size_t i = 0, sz = g_framework->m_gss.Size(); i < sz; ++i)
 	{
-		slString o_name = o->GetName();
+		auto o = g_framework->m_gss[i];
+
+		tString o_name = o->GetName();
 		if (name == o_name)
 			return o;
 	}
 	return 0;
 }
 
-slGS* slFramework::SummonGS(slUID id, const char* _name)
+tGS* tFramework::CreateGS(tUID id, const char* _name)
 {
-	slString name(_name);
-	for (auto o : g_framework->m_gss)
+	tString name(_name);
+	for (size_t i = 0, sz = g_framework->m_gss.Size(); i < sz; ++i)
 	{
+		auto o = g_framework->m_gss[i];
+
 		if (CompareUIDs(o->GetUID(), id))
 		{
-			slString o_name = o->GetName();
+			tString o_name = o->GetName();
 			if (name == o_name)
 				return o;
 		}
@@ -409,20 +394,20 @@ slGS* slFramework::SummonGS(slUID id, const char* _name)
 	return 0;
 }
 
-uint32_t slFramework::GetMeshLoadersNum()
+uint32_t tFramework::GetMeshLoadersNum()
 {
-	return (uint32_t)g_framework->m_meshLoaders.size();
+	return (uint32_t)g_framework->m_meshLoaders.Size();
 }
 
-slMeshLoader* slFramework::GetMeshLoader(uint32_t i)
+tMeshLoader* tFramework::GetMeshLoader(uint32_t i)
 {
-	SL_ASSERT_ST(i < g_framework->m_meshLoaders.size());
+	T_ASSERT_ST(i < g_framework->m_meshLoaders.Size());
 	return g_framework->m_meshLoaders[i];
 }
 
-void slFramework::SummonMesh(const char* path, slMeshLoaderCallback* cb)
+void tFramework::CreateMesh(const char* path, tMeshLoaderCallback* cb)
 {
-	slStringA stra;
+	tStringA stra;
 	std::filesystem::path p = path;
 	auto e = p.extension();
 	uint32_t mln = GetMeshLoadersNum();
@@ -432,7 +417,7 @@ void slFramework::SummonMesh(const char* path, slMeshLoaderCallback* cb)
 		auto sfc = ml->GetSupportedFilesCount();
 		for (uint32_t o = 0; o < sfc; ++o)
 		{
-			slString sfe = ml->GetSupportedFileExtension(o);
+			tString sfe = ml->GetSupportedFileExtension(o);
 			sfe.insert(U".", 0);
 			sfe.to_lower();
 			sfe.to_utf8(stra);
@@ -446,75 +431,75 @@ void slFramework::SummonMesh(const char* path, slMeshLoaderCallback* cb)
 	}
 }
 
-slMat4* slFramework::GetMatrix(slMatrixType t)
+slMat4* tFramework::GetMatrix(slMatrixType t)
 {
 	return g_framework->m_matrixPtrs[(uint32_t)t];
 }
 
-void slFramework::SetMatrix(slMatrixType t, slMat4* m)
+void tFramework::SetMatrix(slMatrixType t, slMat4* m)
 {
 	g_framework->m_matrixPtrs[(uint32_t)t] = m;
 }
 
-slMat4* slFramework::GetMatrixAni()
+slMat4* tFramework::GetMatrixAni()
 {
 	return &g_framework->m_matrixAni[0];
 }
 
-void slFramework::SetMatrixAni(const slMat4& m, uint32_t slot)
+void tFramework::SetMatrixAni(const slMat4& m, uint32_t slot)
 {
-	SL_ASSERT_ST(slot < 255);
+	T_ASSERT_ST(slot < 255);
 	g_framework->m_matrixAni[slot] = m;
 }
 
-slCamera* slFramework::SummonCamera()
+slCamera* tFramework::SummonCamera()
 {
-	return slCreate<slCamera>();
+	return tCreate<slCamera>();
 }
 
-bool slFramework::FileExist(const char* p)
+bool tFramework::FileExist(const char* p)
 {
 	return std::filesystem::exists(p);
 }
 
-bool slFramework::FileExist(const slString& p)
+bool tFramework::FileExist(const tString& p)
 {
 	g_framework->m_fileExistString.clear();
 	p.to_utf8(g_framework->m_fileExistString);
 	return std::filesystem::exists(g_framework->m_fileExistString.m_data);
 }
 
-uint64_t slFramework::FileSize(const char* p)
+uint64_t tFramework::FileSize(const char* p)
 {
 	return (uint64_t)std::filesystem::file_size(p);
 }
 
-uint64_t slFramework::FileSize(const slString& p)
+uint64_t tFramework::FileSize(const tString& p)
 {
 	g_framework->m_fileSizeString.clear();
 	p.to_utf8(g_framework->m_fileSizeString);
 	return (uint64_t)std::filesystem::file_size(g_framework->m_fileSizeString.m_data);
 }
 
-slPolygonMesh* slFramework::SummonPolygonMesh()
+slPolygonMesh* tFramework::SummonPolygonMesh()
 {
-	return slCreate<slPolygonMesh>();
+	return tCreate<slPolygonMesh>();
 }
 
-uint32_t slFramework::GetImageLoadersNum()
+uint32_t tFramework::GetImageLoadersNum()
 {
 	return (uint32_t)g_framework->m_imageLoaders.size();
 }
 
-slImageLoader* slFramework::GetImageLoader(uint32_t i)
+slImageLoader* tFramework::GetImageLoader(uint32_t i)
 {
-	SL_ASSERT_ST(i < g_framework->m_imageLoaders.size());
+	T_ASSERT_ST(i < g_framework->m_imageLoaders.size());
 	return g_framework->m_imageLoaders[i];
 }
 
-slImage* slFramework::SummonImage(const char* path)
+slImage* tFramework::SummonImage(const char* path)
 {
-	slStringA stra;
+	tStringA stra;
 	std::filesystem::path p = path;
 	auto e = p.extension();
 	uint32_t mln = GetImageLoadersNum();
@@ -524,14 +509,14 @@ slImage* slFramework::SummonImage(const char* path)
 		auto sfc = il->GetSupportedFilesCount();
 		for (uint32_t o = 0; o < sfc; ++o)
 		{
-			slString sfe = il->GetSupportedFileExtension(o);
+			tString sfe = il->GetSupportedFileExtension(o);
 			sfe.insert(U".", 0);
 			sfe.to_lower();
 			sfe.to_utf8(stra);
 			auto stre = lowercase(e.generic_string());
 			if (strcmp((const char*)stra.m_data, stre.c_str()) == 0)
 			{
-				slLog::PrintInfo("Load image: %s\n", path);
+				tLog::PrintInfo("Load image: %s\n", path);
 				return il->Load(path);
 			}
 		}
@@ -539,10 +524,10 @@ slImage* slFramework::SummonImage(const char* path)
 	return NULL;
 }
 
-uint8_t* slFramework::SummonFileBuffer(const char* path, uint32_t* szOut, bool isText)
+uint8_t* tFramework::SummonFileBuffer(const char* path, uint32_t* szOut, bool isText)
 {
-	SL_ASSERT_ST(path);
-	SL_ASSERT_ST(szOut);
+	T_ASSERT_ST(path);
+	T_ASSERT_ST(szOut);
 
 	*szOut = 0;
 
@@ -574,7 +559,7 @@ uint8_t* slFramework::SummonFileBuffer(const char* path, uint32_t* szOut, bool i
 			}
 			else
 			{
-				slLog::PrintError("Unable to open file in %s : %i\n", SL_FUNCTION, SL_LINE);
+				tLog::PrintError("Unable to open file in %s : %i\n", SL_FUNCTION, SL_LINE);
 			}
 		}
 	}
@@ -582,12 +567,12 @@ uint8_t* slFramework::SummonFileBuffer(const char* path, uint32_t* szOut, bool i
 	return slArchiveSystem::ZipUnzip(path, szOut, 0);
 }
 
-slGUIFont* slFramework::SummonFont()
+slGUIFont* tFramework::SummonFont()
 {
-	return slCreate<slGUIFont>();
+	return tCreate<slGUIFont>();
 }
 
-slGUIStyle* slFramework::GetGUIStyle(const slGUIStyleTheme& theme)
+slGUIStyle* tFramework::GetGUIStyle(const slGUIStyleTheme& theme)
 {
 	switch (theme)
 	{
@@ -599,10 +584,10 @@ slGUIStyle* slFramework::GetGUIStyle(const slGUIStyleTheme& theme)
 	return &g_framework->m_GUIStyleThemeLight;
 }
 
-slGUIWindow* slFramework::SummonGUIWindow(const slVec2f& position, const slVec2f& size)
+slGUIWindow* tFramework::SummonGUIWindow(const slVec2f& position, const slVec2f& size)
 {
-	slGUIWindow* newWindow = slCreate<slGUIWindow>(position, size);
-	newWindow->SetStyle(slFramework::GetGUIStyle(slGUIStyleTheme::Light));
+	slGUIWindow* newWindow = tCreate<slGUIWindow>(position, size);
+	newWindow->SetStyle(tFramework::GetGUIStyle(slGUIStyleTheme::Light));
 	g_framework->m_GUIWindows.push_back(newWindow);
 	return newWindow;
 }
@@ -627,7 +612,7 @@ void DestroyGUIElement_internal(slGUIElement* e)
 		}
 	}
 
-	slDestroy(e);
+	tDestroy(e);
 }
 
 void _DestroyGUIElement(slGUIElement* e)
@@ -635,23 +620,23 @@ void _DestroyGUIElement(slGUIElement* e)
 	e->SetParent(0);
 	DestroyGUIElement_internal(e);
 }
-void slFramework::Destroy(slGUIElement* e)
+void tFramework::Destroy(slGUIElement* e)
 {
-	SL_ASSERT_ST(e);
+	T_ASSERT_ST(e);
 	if (e->GetWindow()->GetRootElement() == e)
 		return;
 	_DestroyGUIElement(e);
 }
 
-void slFramework::Destroy(slGUIWindow* w)
+void tFramework::Destroy(slGUIWindow* w)
 {
-	SL_ASSERT_ST(w);
+	T_ASSERT_ST(w);
 	_DestroyGUIElement(w->GetRootElement());
 	g_framework->m_GUIWindows.erase_first(w);
-	slDestroy(w);
+	tDestroy(w);
 }
 
-void slFrameworkImpl::UpdateGUI()
+void tFrameworkImpl::UpdateGUI()
 {
 	if (m_GUIWindows.m_head)
 	{
@@ -675,12 +660,12 @@ void slFrameworkImpl::UpdateGUI()
 	}
 }
 
-slGUIState* slFramework::GetGUIState()
+slGUIState* tFramework::GetGUIState()
 {
 	return &g_framework->m_GUIState;
 }
 
-void slFramework::DrawGUI(slGS* gs)
+void tFramework::DrawGUI(slGS* gs)
 {
 	if (g_framework->m_GUIWindows.m_head)
 	{
@@ -700,7 +685,7 @@ void slFramework::DrawGUI(slGS* gs)
 	}
 }
 
-void slFramework::RebuildGUI()
+void tFramework::RebuildGUI()
 {
 	if (g_framework->m_GUIWindows.m_head)
 	{
@@ -717,9 +702,9 @@ void slFramework::RebuildGUI()
 	}
 }
 
-slGUIFont* slFramework::GetDefaultFont(const slGUIDefaultFont& t)
+slGUIFont* tFramework::GetDefaultFont(const slGUIDefaultFont& t)
 {
-	SL_ASSERT_ST(g_framework->m_defaultFonts.m_size);
+	T_ASSERT_ST(g_framework->m_defaultFonts.m_size);
 
 	switch (t)
 	{
@@ -727,22 +712,22 @@ slGUIFont* slFramework::GetDefaultFont(const slGUIDefaultFont& t)
 	case slGUIDefaultFont::Text:
 		return g_framework->m_defaultFonts.m_data[(uint32_t)t];
 	default:
-		slLog::PrintWarning("%s : not implemented\n", SL_FUNCTION);
+		tLog::PrintWarning("%s : not implemented\n", SL_FUNCTION);
 		break;
 	}
 	return g_framework->m_defaultFonts.m_data[0];
 }
 
-void slFramework::InitDefaultFonts(slGS* gs)
+void tFramework::InitDefaultFonts(slGS* gs)
 {
 	static bool isInit = false;
 
 	if (!isInit)
 	{
 		auto getImage = [](uint8_t* buf, uint32_t sz)->slImage* {
-			for (uint32_t i = 0; i < slFramework::GetImageLoadersNum(); ++i)
+			for (uint32_t i = 0; i < tFramework::GetImageLoadersNum(); ++i)
 			{
-				auto il = slFramework::GetImageLoader(i);
+				auto il = tFramework::GetImageLoader(i);
 				for (uint32_t o = 0; o < il->GetSupportedFilesCount(); ++o)
 				{
 					auto str = il->GetSupportedFileExtension(o);
@@ -774,7 +759,7 @@ void slFramework::InitDefaultFonts(slGS* gs)
 
 		g_framework->m_texturesForDestroy.push_back(myFontTexture);
 
-		slGUIFont* myFont = slFramework::SummonFont();
+		slGUIFont* myFont = tFramework::SummonFont();
 		myFont->AddTexture(myFontTexture);
 		myFont->AddGlyph(U'A', slVec2f(0, 0), slPoint(11, 15), 0, slPoint(256, 256));
 		myFont->AddGlyph(U'B', slVec2f(10, 0), slPoint(9, 15), 0, slPoint(256, 256));
@@ -954,7 +939,7 @@ void slFramework::InitDefaultFonts(slGS* gs)
 			{
 				g_framework->m_texturesForDestroy.push_back(myFontTexture);
 
-				myFont = slFramework::SummonFont();
+				myFont = tFramework::SummonFont();
 				myFont->AddTexture(myFontTexture);
 				myFont->AddGlyph((uint32_t)slGUIDefaultIconID::CheckboxUncheck, slVec2f(0, 0), slPoint(14, 14), 0, slPoint(512, 512));
 				myFont->AddGlyph((uint32_t)slGUIDefaultIconID::RadioUncheck, slVec2f(0, 0), slPoint(14, 14), 0, slPoint(512, 512));
@@ -976,7 +961,7 @@ void slFramework::InitDefaultFonts(slGS* gs)
 }
 
 slGUIFont* DefaultGUIDrawTextCallback::OnFont(uint32_t, char32_t i) {
-	SL_ASSERT_ST(g_framework->m_defaultFonts.m_size);
+	T_ASSERT_ST(g_framework->m_defaultFonts.m_size);
 	return g_framework->m_defaultFonts[0];
 }
 
@@ -984,10 +969,10 @@ slColor* DefaultGUIDrawTextCallback::OnColor(uint32_t, char32_t i) {
 	return &g_framework->m_colorWhite;
 }
 
-slVec2f slFramework::GetTextSize(const char32_t* text, slGUIFont* f)
+slVec2f tFramework::GetTextSize(const char32_t* text, slGUIFont* f)
 {
-	SL_ASSERT_ST(text);
-	SL_ASSERT_ST(f);
+	T_ASSERT_ST(text);
+	T_ASSERT_ST(f);
 
 	slVec2f sz, position;
 	slVec4f rct;
@@ -1031,42 +1016,42 @@ slVec2f slFramework::GetTextSize(const char32_t* text, slGUIFont* f)
 	return sz;
 }
 
-slGUIDrawTextCallback* slFramework::GetDefaultDrawTextCallback()
+slGUIDrawTextCallback* tFramework::GetDefaultDrawTextCallback()
 {
 	return &g_framework->m_defaultDrawTextCallback;
 }
 
-slSprite* slFramework::SummonSprite(slTexture* texture)
+tSprite* tFramework::SummonSprite(slTexture* texture)
 {
-	SL_ASSERT_ST(texture);
-	slSprite* newSprite = slCreate<slSprite>();
+	T_ASSERT_ST(texture);
+	tSprite* newSprite = tCreate<tSprite>();
 	newSprite->SetTexture(texture);
 	return newSprite;
 }
 
-#define SL_DESTROY_IMPLEMENTATION(_type) void slFramework::Destroy(_type*o){SL_ASSERT_ST(o);slDestroy(o); }
-//void slFramework::Destroy(slWindow* o)
+#define SL_DESTROY_IMPLEMENTATION(_type) void tFramework::Destroy(_type*o){T_ASSERT_ST(o);tDestroy(o); }
+//void tFramework::Destroy(slWindow* o)
 //{
-//	SL_ASSERT_ST(o);
-//	slDestroy(o);
+//	T_ASSERT_ST(o);
+//	tDestroy(o);
 //}
 //
-//void slFramework::Destroy(slWindowCallback* o)
+//void tFramework::Destroy(slWindowCallback* o)
 //{
-//	SL_ASSERT_ST(o);
-//	slDestroy(o);
+//	T_ASSERT_ST(o);
+//	tDestroy(o);
 //}
 SL_DESTROY_IMPLEMENTATION(slWindow)
 SL_DESTROY_IMPLEMENTATION(slWindowCallback)
-SL_DESTROY_IMPLEMENTATION(slFrameworkCallback)
+SL_DESTROY_IMPLEMENTATION(tFrameworkCallback)
 SL_DESTROY_IMPLEMENTATION(slGUIDrawTextCallback)
 SL_DESTROY_IMPLEMENTATION(slGUIFont)
-void slFramework::Destroy(uint8_t* o) { SL_ASSERT_ST(o); slMemory::free(o); }
+void tFramework::Destroy(uint8_t* o) { T_ASSERT_ST(o); slMemory::free(o); }
 SL_DESTROY_IMPLEMENTATION(slImage)
 SL_DESTROY_IMPLEMENTATION(slPolygonMesh)
 SL_DESTROY_IMPLEMENTATION(slCamera)
 SL_DESTROY_IMPLEMENTATION(slMesh)
-SL_DESTROY_IMPLEMENTATION(slSprite)
+SL_DESTROY_IMPLEMENTATION(tSprite)
 SL_DESTROY_IMPLEMENTATION(slTexture)
 SL_DESTROY_IMPLEMENTATION(slGPUMesh)
 SL_DESTROY_IMPLEMENTATION(slGPUOcclusionObject)

@@ -86,8 +86,6 @@ public:
 	static float* GetDeltaTime();
 
 	static bool PointInRect(tVec4i* r, tVec2i* p);
-	static void PointSet(tVec2i* p, int32_t x, int32_t y);
-	static void RectSet(tVec4i* rct, int32_t l, int32_t t, int32_t r, int32_t b);
 
 	static bool CompareUIDs(const tUID&, const tUID&);
 
@@ -142,7 +140,7 @@ public:
 
 	static void InitDefaultFonts(tGS*);
 	static tGUIFont* GetDefaultFont(const tGUIDefaultFont&);
-	static tGUIDrawTextCallback* GetDefaultDrawTextCallback();
+	//static tGUIDrawTextCallback* GetDefaultDrawTextCallback();
 	static tVec2i GetTextSize(const char32_t* text, tGUIFont*);
 
 	static tSprite* CreateSprite(tTexture*);

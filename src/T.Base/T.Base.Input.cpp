@@ -343,7 +343,7 @@ tInputData* tInput::GetData()
 	return &g_framework->m_input;
 }
 
-tVec2f& tInput::GetMousePosition()
+tVec2i& tInput::GetMousePosition()
 {
 	T_ASSERT_ST(g_framework);
 	return g_framework->m_input.mousePosition;

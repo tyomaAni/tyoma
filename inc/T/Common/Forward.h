@@ -46,5 +46,13 @@ class tGUIState;
 enum class tGUIDefaultFont;
 class tSprite;
 class tTexture;
+struct tCompressionInfo;
+class tArchiveZipFile;
+class tGPUMesh;
+class tMesh;
+class tMaterial;
+class tShader;
+struct tTextureInfo;
+class tGPUOcclusionObject;
 
 #endif

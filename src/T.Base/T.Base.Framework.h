@@ -33,6 +33,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "T/Containers/List.h"
 #include "T/GUI.h"
 
+void tInputUpdatePre(tInputData* id);
+void tInputUpdatePost(tInputData* id);
+
 class tFrameworkImpl
 {
 public:
@@ -49,9 +52,24 @@ public:
 
 	tGUIStyle m_GUIStyleThemeLight;
 	tGUIStyle m_GUIStyleThemeDark;
-	tList<slGUIWindow*> m_GUIWindows;
+	tList<tGUIWindow*> m_GUIWindows;
 	tGUIState m_GUIState;
 	void UpdateGUI();
+
+	bool _compress_fastlz(tCompressionInfo* info);
+	bool _decompress_fastlz(tCompressionInfo* info);
+	tArray<tArchiveZipFile*> m_zipFiles;
+	void _onDestroy_archive();
+
+	tArray<tGS*> m_gss;
+	tArray<tMeshLoader*> m_meshLoaders;
+	tArray<tImageLoader*> m_imageLoaders;
+
+	bool m_imageLoaderConvertToRGBA8 = true;
+
+	tString m_appPath;
+	tStringA m_fileExistString;
+	tStringA m_fileSizeString;
 };
 
 #endif
